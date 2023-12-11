@@ -1,0 +1,231 @@
+{% extends 'templates/home.html' %}
+
+{% block title %}My start Page{% endblock title %}
+{% block journal_page %} {% endblock journal_page %}
+{% block main_page %} current-page {% endblock main_page %}
+
+{% block side-bar_block1 %}
+{% if weather %}
+<div class="white-container mb-15">
+    <div class="weather-thumb">
+        <div class="weather-city text-block">
+            {{ weather.location }}
+        </div>
+
+        <div class="weather-summary">
+        <div class="weather-pic">
+            <img src="https://openweathermap.org/img/w/{{weather.icon}}.png" alt="Weather icon" width="50" height="50"/>
+        </div>
+            <div class="weather-temp">
+                {{ weather.temp }}°C
+            </div>
+        </div>
+        <div class="text-block">
+             Feels like {{ weather.feels_like }}°C
+        </div>
+        <div class="weather-wind text-block">
+             {{ weather.wind.speed }} {% if weather.wind.gust %}
+             ({{ weather.wind.gust }})
+             {% endif %}m/s
+        </div>
+        <div class="weather-desc text-block">
+             {{ weather.description }}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock side-bar_block1 %}
+
+{% block side-bar_block2 %}
+<div class="white-container mb-15">
+    <a class="button button-dark full-width" href="{% url 'note-create' %}" >Add Note</a>
+</div>
+{% endblock side-bar_block2 %}
+
+{% block content %}
+    <div class="page-title">
+        <a class="page-arrow" href="{% url 'note-by-week-prev' week_count|add:-1 %}" title="Prev"><<</a>
+        <span>{{ start_date }} - {{ end_date }}</span>
+        <a class="page-arrow" href="{% url 'note-by-week-next' week_count|add:1 %}" title="Next">>></a>
+    </div>
+
+    <div class="cards-container mb-15">
+        <div class="white-container card">
+            <div class="card-header">
+                <p class="card-title">
+                    Monday
+                    <span class="card-date">{{ notes_week.day1.date|date:"M. d, Y" }}</span>
+                </p>
+                <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day1.date %}">View All</a>
+            </div>
+            <ul class="card-list">
+                {% for task in notes_week.day1.tasks %}
+                <li>
+                    <div class="card-item">
+                    <p class="{{ task.weight }}">&#8226;</p>
+                    <p class="item-title">{{task.title}}</p>
+                    <div class="icon-set">
+                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128269;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                    </div>
+                    </div>
+                </li>
+                {% empty %}
+                <p>Free day</p>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="white-container card">
+            <div class="card-header">
+                <p class="card-title">
+                    Tuesday
+                    <span class="card-date">{{ notes_week.day2.date|date:"M. d, Y" }}</span>
+                </p>
+                <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day2.date %}">View All</a>
+            </div>
+            <ul class="card-list">
+                {% for task in notes_week.day2.tasks %}
+                <li>
+                    <div class="card-item">
+                    <p class="{{ task.weight }}">&#8226;</p>
+                    <p class="item-title">{{task.title}}</p>
+                    <div class="icon-set">
+                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128269;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                    </div>
+                    </div>
+                </li>
+                {% empty %}
+                <p>Free day</p>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="white-container card">
+            <div class="card-header">
+                <p class="card-title">Wednesday
+                    <span class="card-date">{{ notes_week.day3.date|date:"M. d, Y" }}</span>
+                </p>
+                    <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day3.date %}">View All</a>
+            </div>
+            <ul class="card-list">
+                {% for task in notes_week.day3.tasks %}
+                <li>
+                    <div class="card-item">
+                    <p class="{{ task.weight }}">&#8226;</p>
+                    <p class="item-title">{{task.title}}</p>
+                    <div class="icon-set">
+                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128269;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                    </div>
+                    </div>
+                </li>
+                {% empty %}
+                <p>Free day</p>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="white-container card">
+            <div class="card-header">
+                <p class="card-title">Thursday
+                    <span class="card-date">{{ notes_week.day4.date|date:"M. d, Y" }}</span>
+                </p>
+                <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day4.date %}">View All</a>
+            </div>
+            <ul class="card-list">
+                {% for task in notes_week.day4.tasks %}
+                <li>
+                    <div class="card-item">
+                    <p class="{{ task.weight }}">&#8226;</p>
+                    <p class="item-title">{{task.title}}</p>
+                    <div class="icon-set">
+                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128269;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                    </div>
+                    </div>
+                </li>
+                {% empty %}
+                <p>Free day</p>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="white-container card">
+            <div class="card-header">
+                <p class="card-title">Friday
+                    <span class="card-date">{{ notes_week.day5.date|date:"M. d, Y" }}</span>
+                </p>
+                <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day5.date %}">View All</a>
+            </div>
+            <ul class="card-list">
+                {% for task in notes_week.day5.tasks %}
+                <li>
+                    <div class="card-item">
+                    <p class="{{ task.weight }}">&#8226;</p>
+                    <p class="item-title">{{task.title}}</p>
+                    <div class="icon-set">
+                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128269;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                    </div>
+                    </div>
+                </li>
+                {% empty %}
+                <p>Free day</p>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="white-container card">
+            <div class="card-header">
+                <p class="card-title">Saturday
+                    <span class="card-date">{{ notes_week.day6.date|date:"M. d, Y" }}</span>
+                </p>
+                <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day6.date %}">View All</a>
+            </div>
+            <ul class="card-list">
+                {% for task in notes_week.day6.tasks %}
+                <li>
+                    <div class="card-item">
+                    <p class="{{ task.weight }}">&#8226;</p>
+                    <p class="item-title">{{task.title}}</p>
+                    <div class="icon-set">
+                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128269;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                    </div>
+                    </div>
+                </li>
+                {% empty %}
+                <p>Free day</p>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="white-container sunday-card-container">
+        <div class="card-header">
+            <p class="card-title">Sunday
+                <span class="card-date">{{ notes_week.day7.date|date:"M. d, Y" }}</span>
+            </p>
+            <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day7.date %}">View All</a>
+        </div>
+        <ul class="card-list">
+            {% for task in notes_week.day7.tasks %}
+            <li>
+                <div class="card-item">
+                <p class="{{ task.weight }}">&#8226;</p>
+                <p class="item-title">{{task.title}}</p>
+                <div class="icon-set">
+                    <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128269;</a>
+                    <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
+                    <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                </div>
+                </div>
+            </li>
+            {% empty %}
+            <p>Free day</p>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}

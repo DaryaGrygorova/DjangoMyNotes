@@ -1,0 +1,51 @@
+{% extends 'notes/templates/notes/main.html' %}
+
+{% block title %}My Journal{% endblock title %}
+{% block main_page %} {% endblock main_page %}
+{% block journal_page %} current-page {% endblock journal_page %}
+
+{% block side-bar_block1 %}
+<h2 class="title">My Journal</h2>
+{% endblock side-bar_block1 %}
+
+{% block side-bar_block2 %}
+<div class="white-container mb-15">
+    <a class="button button-light full-width mb-15" href="{% url 'main' %}" ><< Go to Main</a>
+    <a class="button button-dark full-width" href="{% url 'note-create' %}" >Add Note</a>
+</div>
+{% endblock side-bar_block2 %}
+
+{% block side-bar_block3 %}
+<div class="white-container">
+    <form method="GET" class="form">
+        <label class="form-label" for="search-area">
+            <span class="mb-5">Search notes by title</span>
+            <input class="full-width mb-15" type='text' name="search-area" placeholder="Search..." value="{{ search_input }}" autofocus />
+        </label>
+        <button class="button button-dark full-width" type='submit'>Search</button>
+    </form>
+</div>
+{% endblock side-bar_block3 %}
+
+{% block content %}
+{% for note in notes %}
+<div class="white-container mb-5">
+    <p class="mb-5">Created at: {{ note.create_at|date:"M. d, Y (D)" }}</p>
+    <h3 class="text-left mb-5">{{ note.title }}</h3>
+    <hr/>
+    <p class="mb-15">{{note.desc}}</p>
+     <div  class="container--flex base-flex">
+        <a class="button button-light width-120px" href="{% url 'note-update' note.id %}" >Edit</a>
+        <a class="button button-light width-120px" href="{% url 'note-delete' note.id %}" >Delete</a>
+    </div>
+</div>
+{% empty %}
+    <div class="white-container">
+    {% if notes.search_input %}
+    <h3>Notes not found</h3>
+    {% else %}
+    <h3>No notes in journal</h3>
+    {% endif %}
+    </div>
+{% endfor %}
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends 'templates/home.html' %}
+
+{% block title %}Create Note{% endblock title %}
+
+{% block side-bar_block1 %}
+<div class="white-container">
+    <a class="button button-light full-width mb-15" href="{% url 'main' %}" ><< Go to Main</a>
+    <a class="button button-light full-width" href="{% url 'notes' %}" ><< Go to Journal</a>
+</div>
+{% endblock side-bar_block1 %}
+
+{% block content %}
+    <div class="white-container">
+    <h1 class="title">Create new note</h1>
+
+    <form method="POST" class="form">
+    {% csrf_token %}
+    <label class="form-label full-width-input mb-15" for="id_title">
+        <span>{{form.title.label}}</span>
+        {{form.title}}
+    </label>
+    <label class="form-label textarea-label full-width-input mb-15" for="id_desc">
+        <span>Description</span>
+        {{form.desc}}
+    </label>
+    <div class="container--flex base-flex mb-15 flex-wrap">
+        <label class="form-label container--flex base-flex" for="id_deadline">
+            <span>{{form.deadline.label}}</span>
+            {{ form.deadline }}
+        </label>
+        <label class="form-label container--flex base-flex" for="id_weight">
+            <span>{{form.weight.label}}</span>
+            {{form.weight}}
+        </label>
+        <label class="form-label container--flex base-flex" for="id_type">
+            <span>{{form.type.label}}</span>
+            {{form.type}}
+        </label>
+    </div>
+    <div class="container--flex justify-end">
+        <button class="button button-dark width-120px" type="submit">Add</button>
+    </div>
+    </form>
+</div>
+{% endblock content %}

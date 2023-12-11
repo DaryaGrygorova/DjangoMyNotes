@@ -1,0 +1,88 @@
+{% extends 'notes/templates/notes/main.html' %}
+
+{% block title %}Day Tasks{% endblock title %}
+{% block main_page %} {% endblock main_page %}
+{% block journal_page %} {% endblock journal_page %}
+
+{% block side-bar_block1 %}
+<div class="white-container mb-15">
+    <h2>Date: {{ by_date }}</h2>
+</div>
+{% endblock side-bar_block1 %}
+
+{% block side-bar_block2 %}
+<div class="white-container mb-15">
+    <a class="button button-light full-width mb-15" href="{% url 'main' %}" ><< Go to Main</a>
+    <a class="button button-light full-width mb-15" href="{% url 'notes' %}" ><< Go to Journal</a>
+    <a class="button button-dark full-width" href="{% url 'note-create' %}" >Add Note</a>
+</div>
+{% endblock side-bar_block2 %}
+
+{% block side-bar_block3 %}
+<div class="white-container mb-15">
+    <form method="GET" class="form">
+        <label class="form-label" for="search-area">
+            <span class="mb-5">Search tasks by title</span>
+            <input
+                class="full-width mb-15"
+                type='text' name="search-area"
+                placeholder="Search..."
+                value="{{ search_input }}" />
+        </label>
+        <button class="button button-dark full-width" type='submit'>Search</button>
+    </form>
+</div>
+{% endblock side-bar_block3 %}
+
+{% block side-bar_block4 %}
+<div class="white-container">
+    <form method="POST" class="form" action="{% url 'day' %}" >
+    {% csrf_token %}
+        <label class="form-label" for="deadline">
+            <span class="mb-5">Search tasks by date</span>
+            <input
+                class="full-width mb-15"
+                type='date'
+                name="deadline"
+                value=""
+            />
+        </label>
+        <button class="button button-dark full-width" type='submit'>Search</button>
+    </form>
+</div>
+{% endblock side-bar_block4 %}
+
+{% block content %}
+{% for task in tasks %}
+<div class="white-container mb-15">
+    <div class="container--flex base-flex">
+        <h3 class="text-left mb-5 {% if task.isComplete %} strike {% endif %}">
+            {{ task.title }}
+        </h3>
+        <div class="container--flex base-flex">
+            <p class="mb-5 {{ task.weight }}"><b>{{ task.weight }}</b></p>
+            <p class="mb-5"><b>Type: {{ task.type }}</b></p>
+            <p class="mb-5"><b>Date: {{ task.deadline }}</b></p>
+        </div>
+    </div>
+    <div class="container--flex base-flex">
+        <p class="mb-5">Created at: {{ task.create_at|date:"M. d, Y (D)" }}</p>
+        <div class="icon-set">
+            <a class="icon" href="{% url 'note' task.id %}" title="View">&#128269;</a>
+            <a class="icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
+            <a class="icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+        </div>
+    </div>
+    <hr/>
+    <p class="mb-15">{{task.desc}}</p>
+</div>
+{% empty %}
+    <div class="white-container">
+    {% if tasks.search_input %}
+    <h3>Notes not found</h3>
+    {% else %}
+    <h3>No tasks in Note</h3>
+    {% endif %}
+    </div>
+{% endfor %}
+{% endblock content %}

@@ -1,0 +1,54 @@
+.weather-pic {
+  width: 50px;
+  height: 50px;
+}
+
+.weather-city {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.weather-summary {
+    display: flex;
+    gap: 5px;
+    margin: 5px 0px;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-temp {
+  font-size: 24px;
+}
+
+.text-block {
+  position: relative;
+  padding-left: 24px;
+}
+
+.text-block::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: contain;
+}
+
+.weather-desc:first-letter {
+    text-transform: uppercase;
+}
+
+.weather-desc::before {
+    background-image: url('../images/weather.svg');
+}
+
+.weather-city::before {
+    background-image: url('../images/location.svg');
+}
+.weather-wind::before {
+    background-image: url('../images/wind.svg');
+}

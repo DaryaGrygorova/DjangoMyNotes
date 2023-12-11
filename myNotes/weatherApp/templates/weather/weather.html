@@ -1,0 +1,28 @@
+{% extends 'templates/home.html' %}
+
+{% block title %}Weather{% endblock title %}
+
+{% block side-bar_block1 %}
+{% if weather %}
+
+<div class="summary">
+    <div class="pic-main">
+        <img src="https://openweathermap.org/img/w/{{weather.icon}}.png" alt="Weather icon" width="40" height="40"/>
+    </div>
+    <div class="city text-block">
+        {{ weather.location }}
+    </div>
+    <div class="weather">
+        <div class="temp">
+            {{ weather.temp }}°C
+        </div>
+        <div class="weather-desc text-block">
+             {{ weather.description }}
+        </div>
+    </div>
+</div>
+
+{% else %}
+<p>Nothing to show</p>
+{% endif %}
+{% endblock side-bar_block1 %}

@@ -1,0 +1,38 @@
+{% extends 'notes/templates/notes/main.html' %}
+
+{% block title %}Task Details{% endblock title %}
+
+{% block side-bar_block1 %}
+<div class="white-container mb-15">
+    <a class="button button-light full-width mb-15" href="{% url 'main' %}" ><< Go to Main</a>
+    <a class="button button-light full-width" href="{% url 'notes' %}" ><< Go to Journal</a>
+</div>
+{% endblock side-bar_block1 %}
+
+{% block side-bar_block2 %}
+{% endblock side-bar_block2 %}
+
+{% block content %}
+<div class="white-container">
+    <h2 class="title text-left">Title: {{note.title}}</h2>
+    <div class="container--flex base-flex">
+        <p>Date: {{ note.deadline }}</p>
+        <p>Status:
+            {% if not note.isComplete %}
+            In progress
+            {% else %}
+            Completed
+        {% endif %}
+        </p>
+        <p>Type: {{ note.type }}</p>
+        <p class="{{ note.weight }}"><b>{{ note.weight }}</b></p>
+    </div>
+    <hr/>
+    <p class="mb-15">{{note.desc}}</p>
+    <div  class="container--flex base-flex">
+        <a class="button button-light width-120px" href="{% url 'note-update' note.id %}" >Edit</a>
+        <a class="button button-light width-120px" href="{% url 'note-delete' note.id %}" >Delete</a>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'templates/base.html' %}
+
+{% block title %}Register{% endblock title %}
+
+{% block innerContent %}
+<main>
+    <div class="container">
+        <div class="white-container container--central">
+            <h1 class="title">Welcome to MyNotes</h1>
+            <p class="subtitle">Create your account</p>
+            <form method="POST" class="form">
+                {% csrf_token %}
+                <label class="form-label full-width-input mb-15" for="id_username">
+                    <span>{{form.username.label}}</span>
+                    {{form.username}}
+                </label>
+
+                <label class="form-label full-width-input mb-15" for="id_password1">
+                    <span>{{form.password1.label}}</span>
+                    {{form.password1}}
+                </label>
+
+                <label class="form-label full-width-input mb-15" for="id_password2">
+                    <span>{{form.password2.label}}</span>
+                    {{form.password2}}
+                </label>
+
+                <button type="submit" class="button button-dark full-width mb-15">Signup</button>
+            </form>
+
+            <p class="additional-text">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
+</main>
+
+{% endblock innerContent %}

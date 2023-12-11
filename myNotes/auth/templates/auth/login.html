@@ -1,0 +1,31 @@
+{% extends 'templates/base.html' %}
+
+{% block title %}Login{% endblock title %}
+
+{% block innerContent %}
+<main>
+    <div class="container">
+        <div class="white-container container--central">
+         <h1 class="title">Welcome to MyNotes</h1>
+            <form method="POST" class="form">
+            {% csrf_token %}
+                <label class="form-label full-width-input mb-15" for="id_username">
+                    <span>{{form.username.label}}</span>
+                    {{form.username}}
+                </label>
+
+                <label class="form-label full-width-input mb-15" for="id_password">
+                    <span>{{form.password.label}}</span>
+                    {{form.password}}
+                </label>
+
+                <button type="submit" class="button button-dark full-width mb-15">Login</button>
+            </form>
+
+            <p class="additional-text" >Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+
+        </div>
+    </div>
+</main>
+
+{% endblock innerContent %}
