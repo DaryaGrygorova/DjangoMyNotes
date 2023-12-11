@@ -239,6 +239,10 @@ a.button {
   white-space: nowrap;
 }
 
+.user-greeting {
+  font-size: 18px;
+}
+
 .header-nav {
   display: flex;
   align-items: center;

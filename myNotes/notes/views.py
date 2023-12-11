@@ -17,9 +17,6 @@ from utils.utils import get_weather, get_last_monday
 class MainView(LoginRequiredMixin, ListView):
     model = Note
     template_name = 'notes/templates/notes/main.html'
-
-    # get weather info
-    weather_info = get_weather('Kyiv')
     context_object_name = 'notes'
 
     # get date of last Monday
@@ -27,7 +24,11 @@ class MainView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['weather'] = self.weather_info
+        # get weather info
+        location = self.request.user.profile.location or 'Kyiv'
+        weather_info = get_weather(location)
+
+        context['weather'] = weather_info
         context['notes'] = context['notes'].filter(user=self.request.user)
         context['notes'] = context['notes'].exclude(isComplete='True')
         context['notes'] = context['notes'].exclude(type='Note')

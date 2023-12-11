@@ -10,7 +10,9 @@
         <span class="logo logo-dark-theme">MyNotes</span>
         <p class="header-user-info">
              {% if user.is_authenticated %}
-             <span class="user-greeting">Hi, {{ user.username }}!</span>
+             <a class="user-greeting link" href="{% url 'update-profile' %}">
+                 Hi, {% firstof user.profile.first_name user.username %}!
+             </a>
              {% else %}
               <span class="user-greeting user-greeting--noauthorized">
                   You are not logged in
@@ -22,11 +24,12 @@
             {% if user.is_authenticated %}
             <li class="page-nav-item">
               <a class="page-nav link {% block day_page %}{% endblock day_page %}" href="{% url 'day' %}">Today</a>
-            </li><li class="page-nav-item">
-              <a class="page-nav link {% block journal_page %}{% endblock journal_page %}" href="{% url 'notes' %}">My Journal</a>
             </li>
             <li class="page-nav-item">
                 <a class="page-nav link {% block main_page %}{% endblock main_page %}" href="{% url 'main' %}">Main</a>
+            </li>
+            <li class="page-nav-item">
+              <a class="page-nav link {% block journal_page %}{% endblock journal_page %}" href="{% url 'notes' %}">My Journal</a>
             </li>
             <li class="page-nav-item">
                 <a class="page-nav link" href="{% url 'logout' %}">Logout</a>

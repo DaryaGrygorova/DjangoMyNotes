@@ -1,0 +1,45 @@
+{% extends 'templates/base.html' %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block innerContent %}
+<main>
+    <div class="container">
+        <div class="white-container container--central">
+            <h1 class="title">Welcome to MyNotes</h1>
+            <h2 class="subtitle mb-5">Create your Profile</h2>
+            <form method="post" class="form">
+                {% csrf_token %}
+                <label class="form-label full-width-input mb-15" for="id_first_name">
+                    <span>{{user_form.first_name.label}}</span>
+                    {{user_form.first_name}}
+                </label>
+
+                <label class="form-label full-width-input mb-15" for="id_last_name">
+                    <span>{{user_form.last_name.label}}</span>
+                    {{user_form.last_name}}
+                </label>
+
+                <label class="form-label full-width-input mb-15" for="id_email">
+                    <span>{{user_form.email.label}}</span>
+                    {{user_form.email}}
+                </label>
+
+                <label class="form-label full-width-input mb-15" for="id_birth_date">
+                    <span>{{profile_form.birth_date.label}}</span>
+                    {{profile_form.birth_date}}
+                </label>
+
+                <label class="form-label full-width-input mb-15" for="id_location">
+                    <span>{{profile_form.location.label}} (city)</span>
+                    {{profile_form.location}}
+                </label>
+
+              <button type="submit" class="button button-dark full-width mb-15">Save</button>
+            </form>
+            <p class="additional-text">Want to do it later? <a href="{% url 'main' %}">Skip</a></p>
+        </div>
+    </div>
+</main>
+
+{% endblock innerContent %}

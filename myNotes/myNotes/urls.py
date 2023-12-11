@@ -23,6 +23,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include('auth.urls')),
     path("notes/", include('notes.urls')),
-    path("weather/", include('weatherApp.urls')),
+    path("profile/", include('uProfile.urls')),
     path("", TemplateView.as_view(template_name="templates/home.html"), name="home"),
 ]
