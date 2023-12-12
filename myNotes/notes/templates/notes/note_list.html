@@ -30,14 +30,17 @@
 {% block content %}
 {% for note in notes %}
 <div class="white-container mb-5">
-    <p class="mb-5">Created at: {{ note.create_at|date:"M. d, Y (D)" }}</p>
+    <div class="container--flex base-flex">
+        <p class="mb-5">Created at: <b>{{ note.create_at|date:"M. d, Y (D)" }}</b></p>
+        <div class="icon-set">
+            <a class="icon" href="{% url 'note' note.id %}" title="View">&#128065;</a>
+            <a class="icon" href="{% url 'note-update' note.id %}" title="Edit">&#9998;</a>
+            <a class="icon" href="{% url 'note-delete' note.id %}" title="Delete">&#10008;</a>
+        </div>
+    </div>
     <h3 class="text-left mb-5">{{ note.title }}</h3>
     <hr/>
     <p class="mb-15">{{note.desc}}</p>
-     <div  class="container--flex base-flex">
-        <a class="button button-light width-120px" href="{% url 'note-update' note.id %}" >Edit</a>
-        <a class="button button-light width-120px" href="{% url 'note-delete' note.id %}" >Delete</a>
-    </div>
 </div>
 {% empty %}
     <div class="white-container">

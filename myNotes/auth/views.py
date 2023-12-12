@@ -1,21 +1,25 @@
-from django.shortcuts import render, redirect
-from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
-
-from django.contrib.auth.views import LoginView
-from django.contrib.auth.forms import UserCreationForm
+"""Define views for render pages"""
 from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
+from django.views.generic.edit import FormView
 
 
 class CustomLoginView(LoginView):
-    template_name = 'auth/templates/auth/login.html'
-    fields = '__all__'
+    """Show login form"""
+
+    template_name = "auth/templates/auth/login.html"
+    fields = "__all__"
 
 
 class RegisterPage(FormView):
-    template_name = 'auth/templates/auth/register.html'
+    """Show register form with auto logining"""
+
+    template_name = "auth/templates/auth/register.html"
     form_class = UserCreationForm
-    success_url = reverse_lazy('update-profile')
+    success_url = reverse_lazy("profile")
 
     def form_valid(self, form):
         user = form.save()
@@ -25,5 +29,5 @@ class RegisterPage(FormView):
 
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return redirect('main')
+            return redirect("main")
         return super().get(*args, **kwargs)

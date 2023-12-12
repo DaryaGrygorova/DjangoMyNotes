@@ -128,10 +128,10 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 10px;
+    gap: 5px;
     padding-left: 5px;
-    font-size: 18px;
-    border-bottom: 1px solid var(--light-gray-color);
+    font-size: 16px;
+    /*border-bottom: 1px solid var(--light-gray-color);*/
 }
 
 .item-title {
@@ -161,4 +161,9 @@
 .icon:hover,
 .icon:focus {
     color: var(--dark-theme-color);
+}
+
+.task-title {
+    line-height: 1.1;
+    max-width: calc(100% - 200px);
 }

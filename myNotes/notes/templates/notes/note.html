@@ -1,6 +1,8 @@
 {% extends 'notes/templates/notes/main.html' %}
 
 {% block title %}Task Details{% endblock title %}
+{% block journal_page %} {% endblock journal_page %}
+{% block main_page %} {% endblock main_page %}
 
 {% block side-bar_block1 %}
 <div class="white-container mb-15">
@@ -14,25 +16,32 @@
 
 {% block content %}
 <div class="white-container">
-    <h2 class="title text-left">Title: {{note.title}}</h2>
+<div class="container--flex base-flex">
+    <h2 class="text-left ">Title: {{note.title}}</h2>
+    <div class="icon-set">
+            <a class="icon" href="{% url 'note-update' note.id %}" title="Edit">&#9998;</a>
+            <a class="icon" href="{% url 'note-delete' note.id %}" title="Delete">&#10008;</a>
+        </div>
+    </div>
     <div class="container--flex base-flex">
         <p>Date: {{ note.deadline }}</p>
+        <p class="{{ note.weight }}"><b>{{ note.weight }}</b></p>
         <p>Status:
             {% if not note.isComplete %}
             In progress
             {% else %}
             Completed
-        {% endif %}
+            {% endif %}
         </p>
-        <p>Type: {{ note.type }}</p>
-        <p class="{{ note.weight }}"><b>{{ note.weight }}</b></p>
+{#        <p>Type: {{ note.type }}</p>#}
+
     </div>
     <hr/>
     <p class="mb-15">{{note.desc}}</p>
-    <div  class="container--flex base-flex">
-        <a class="button button-light width-120px" href="{% url 'note-update' note.id %}" >Edit</a>
-        <a class="button button-light width-120px" href="{% url 'note-delete' note.id %}" >Delete</a>
-    </div>
+{#    <div  class="container--flex base-flex">#}
+{#        <a class="button button-light width-120px" href="{% url 'note-update' note.id %}" >Edit</a>#}
+{#        <a class="button button-light width-120px" href="{% url 'note-delete' note.id %}" >Delete</a>#}
+{#    </div>#}
 </div>
 
 {% endblock content %}

@@ -56,19 +56,19 @@
 {% for task in tasks %}
 <div class="white-container mb-15">
     <div class="container--flex base-flex">
-        <h3 class="text-left mb-5 {% if task.isComplete %} strike {% endif %}">
+        <h2 class="text-left task-title {% if task.isComplete %} strike {% endif %}">
             {{ task.title }}
-        </h3>
+        </h2>
         <div class="container--flex base-flex">
-            <p class="mb-5 {{ task.weight }}"><b>{{ task.weight }}</b></p>
-            <p class="mb-5"><b>Type: {{ task.type }}</b></p>
-            <p class="mb-5"><b>Date: {{ task.deadline }}</b></p>
+            <p class=" {{ task.weight }}"><b>{{ task.weight }}</b></p>
+{#            <p class="mb-5"><b>Type: {{ task.type }}</b></p>#}
+            <p><b>Date: {{ task.deadline }}</b></p>
         </div>
     </div>
     <div class="container--flex base-flex">
-        <p class="mb-5">Created at: {{ task.create_at|date:"M. d, Y (D)" }}</p>
+        <p>Created at: {{ task.create_at|date:"M. d, Y (D)" }}</p>
         <div class="icon-set">
-            <a class="icon" href="{% url 'note' task.id %}" title="View">&#128269;</a>
+            <a class="icon" href="{% url 'note' task.id %}" title="View">&#128065;</a>
             <a class="icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
             <a class="icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
         </div>
