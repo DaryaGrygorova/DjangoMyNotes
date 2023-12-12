@@ -11,7 +11,7 @@
 {% block side-bar_block2 %}
 <div class="white-container mb-15">
     <a class="button button-light full-width mb-15" href="{% url 'main' %}" ><< Go to Main</a>
-    <a class="button button-dark full-width" href="{% url 'note-create' %}" >Add Note</a>
+    <a class="button button-dark full-width" href="{% url 'note-create' %}?type=Note&next={{ request.path|urlencode }}" >Add Note</a>
 </div>
 {% endblock side-bar_block2 %}
 
@@ -33,9 +33,9 @@
     <div class="container--flex base-flex">
         <p class="mb-5 nowrap">Created at: <b>{{ note.create_at|date:"M. d, Y (D)" }}</b></p>
         <div class="icon-set">
-            <a class="icon" href="{% url 'note' note.id %}" title="View">&#128065;</a>
-            <a class="icon" href="{% url 'note-update' note.id %}" title="Edit">&#9998;</a>
-            <a class="icon" href="{% url 'note-delete' note.id %}" title="Delete">&#10008;</a>
+            <a class="icon" href="{% url 'note' note.id %}?next={{ request.path|urlencode }}" title="View">&#128065;</a>
+            <a class="icon" href="{% url 'note-update' note.id %}?next={{ request.path|urlencode }}" title="Edit">&#9998;</a>
+            <a class="icon" href="{% url 'note-delete' note.id %}?next={{ request.path|urlencode }}" title="Delete">&#10008;</a>
         </div>
     </div>
     <h3 class="text-left mb-5">{{ note.title }}</h3>

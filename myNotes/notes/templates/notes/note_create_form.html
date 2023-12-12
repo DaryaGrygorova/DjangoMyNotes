@@ -15,9 +15,13 @@
 
     <form method="POST" class="form">
     {% csrf_token %}
+
     <label class="form-label full-width-input mb-15" for="id_title">
         <span>{{form.title.label}}</span>
         {{form.title}}
+        {% if form.errors.title %}
+        <span class="form-error">{{ form.errors.title.as_text }}</span>
+        {% endif %}
     </label>
     <label class="form-label textarea-label full-width-input mb-15" for="id_desc">
         <span>Description</span>

@@ -10,11 +10,11 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 
-from .forms import CreateNoteForm, UpdateNoteForm
-from .models import Note
-
 from utils.constants import WEEK_DAYS
 from utils.utils import get_last_monday, get_weather
+
+from .forms import CreateNoteForm, UpdateNoteForm
+from .models import Note
 
 
 class MainView(LoginRequiredMixin, ListView):
@@ -36,7 +36,13 @@ class MainView(LoginRequiredMixin, ListView):
 
         # add to context weather info
         location = self.request.user.profile.location or "Kyiv"
-        weather_info = get_weather(location)
+
+        try:
+            weather_info = get_weather(location)
+        except Exception as err:
+            print(err)
+            weather_info = None
+
         context["weather"] = weather_info
 
         context["notes"] = context["notes"].filter(user=self.request.user)
@@ -60,7 +66,9 @@ class MainView(LoginRequiredMixin, ListView):
             current_date = self.start_date + timedelta(days=i)
             notes_week[day]["date"] = current_date
             notes_week[day]["tasks"] = (
-                context["notes"].filter(deadline=current_date).order_by("weight")
+                context["notes"]
+                .filter(deadline=current_date)
+                .order_by("weight", "create_at")
             )
             context["notes_week"] = notes_week
 
@@ -111,11 +119,13 @@ class TasksDayList(LoginRequiredMixin, ListView):
         # returns entries excluding the type 'note'
         context["tasks"] = context["tasks"].exclude(type="Note")
 
-        # filter data by target date with ordering by status
+        # filter data by target date with ordering by status and weight
         target_date = self.kwargs["deadline"]
         context["by_date"] = target_date
         context["tasks"] = (
-            context["tasks"].filter(deadline=target_date).order_by("isComplete")
+            context["tasks"]
+            .filter(deadline=target_date)
+            .order_by("isComplete", "weight", "create_at")
         )
 
         # filter data by search query
@@ -134,6 +144,21 @@ class NoteDetail(LoginRequiredMixin, DetailView):
     context_object_name = "note"
     template_name = "notes/note.html"
 
+    def get_context_data(self, **kwargs):
+        back_to_url = self.request.GET.get("next", "")
+
+        # if next not define redirect to page with notes on deadline day
+        if not back_to_url:
+            current_date = self.request.POST.get(
+                "deadline", datetime.today().strftime("%Y-%m-%d")
+            )
+            back_to_url = f"/notes/notes/{current_date}/"
+
+        context = super().get_context_data(**kwargs)
+        context["back_to_url"] = back_to_url
+
+        return context
+
 
 class NoteCreate(LoginRequiredMixin, CreateView):
     """
@@ -144,17 +169,34 @@ class NoteCreate(LoginRequiredMixin, CreateView):
     model = Note
     form_class = CreateNoteForm
     template_name = "notes/templates/notes/note_create_form.html"
-    # success_url = reverse_lazy('main')
 
-    def get_success_url(self):
-        current_date = self.request.POST.get(
+    def get_initial(self):
+        initial = super().get_initial()
+
+        target_date = self.request.GET.get(
             "deadline", datetime.today().strftime("%Y-%m-%d")
         )
-        return f"/notes/notes/{current_date}/"
+        entire_type = self.request.GET.get("type", "To do")
+
+        initial["deadline"] = target_date
+        initial["type"] = entire_type
+        return initial
+
+    def get_success_url(self):
+        url = self.request.GET.get("next", "")
+
+        # if next not define redirect to page with notes on deadline day
+        if not url:
+            target_date = self.request.POST.get(
+                "deadline", datetime.today().strftime("%Y-%m-%d")
+            )
+            url = f"/notes/notes/{target_date}/"
+        return url
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         if not form.instance.title:
+            form.add_error("title", "Title is required field!")
             return self.form_invalid(form)
         return super().form_valid(form)
 
@@ -168,17 +210,22 @@ class NoteUpdate(LoginRequiredMixin, UpdateView):
     model = Note
     form_class = UpdateNoteForm
     template_name = "notes/templates/notes/note_update_form.html"
-    # success_url = reverse_lazy('main')
 
     def get_success_url(self):
-        current_date = self.request.POST.get(
-            "deadline", datetime.today().strftime("%Y-%m-%d")
-        )
-        return f"/notes/notes/{current_date}/"
+        url = self.request.GET.get("next", "")
+
+        # if next not define redirect to page with notes on deadline day
+        if not url:
+            current_date = self.request.POST.get(
+                "deadline", datetime.today().strftime("%Y-%m-%d")
+            )
+            url = f"/notes/notes/{current_date}/"
+        return url
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         if not form.instance.title:
+            form.add_error("title", "Title is required field!")
             return self.form_invalid(form)
         return super().form_valid(form)
 
@@ -193,10 +240,16 @@ class DeleteNoteView(LoginRequiredMixin, DeleteView):
     context_object_name = "note"
 
     def get_success_url(self):
-        current_date = self.request.POST.get(
-            "deadline", datetime.today().strftime("%Y-%m-%d")
-        )
-        return f"/notes/notes/{current_date}/"
+        url = self.request.GET.get("next", "")
+
+        # if next not define or if user delete note from DetailView
+        # redirect to page with notes on deadline day
+        if not url or "/note/" in url:
+            current_date = self.request.POST.get(
+                "deadline", datetime.today().strftime("%Y-%m-%d")
+            )
+            url = f"/notes/notes/{current_date}/"
+        return url
 
 
 @login_required

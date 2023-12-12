@@ -14,7 +14,7 @@
 <div class="white-container mb-15">
     <a class="button button-light full-width mb-15" href="{% url 'main' %}" ><< Go to Main</a>
     <a class="button button-light full-width mb-15" href="{% url 'notes' %}" ><< Go to Journal</a>
-    <a class="button button-dark full-width" href="{% url 'note-create' %}" >Add Note</a>
+    <a class="button button-dark full-width" href="{% url 'note-create' %}?next={{ request.path|urlencode }}" >Add Note</a>
 </div>
 {% endblock side-bar_block2 %}
 
@@ -67,9 +67,9 @@
     <div class="container--flex base-flex">
         <p>Created at: {{ task.create_at|date:"M. d, Y (D)" }}</p>
         <div class="icon-set">
-            <a class="icon" href="{% url 'note' task.id %}" title="View">&#128065;</a>
-            <a class="icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
-            <a class="icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+            <a class="icon" href="{% url 'note' task.id %}?next={{ request.path|urlencode }}" title="View">&#128065;</a>
+            <a class="icon" href="{% url 'note-update' task.id %}?next={{ request.path|urlencode }}" title="Edit">&#9998;</a>
+            <a class="icon" href="{% url 'note-delete' task.id %}?next={{ request.path|urlencode }}" title="Delete">&#10008;</a>
         </div>
     </div>
     <hr/>

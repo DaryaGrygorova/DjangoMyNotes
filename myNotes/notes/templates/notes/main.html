@@ -38,7 +38,7 @@
 
 {% block side-bar_block2 %}
 <div class="white-container mb-15">
-    <a class="button button-dark full-width" href="{% url 'note-create' %}" >Add Note</a>
+    <a class="button button-dark full-width" href="{% url 'note-create' %}?next={{ request.path|urlencode }}" >Add Note</a>
 </div>
 {% endblock side-bar_block2 %}
 
@@ -61,7 +61,7 @@
 {% endblock side-bar_block3 %}
 
 {% block content %}
-    <div class="page-title">
+    <div class="white-container page-title">
         <a class="page-arrow" href="{% url 'note-by-week-prev' week_count|add:-1 %}" title="Prev"><<</a>
         <span>{{ start_date }} - {{ end_date }}</span>
         <a class="page-arrow" href="{% url 'note-by-week-next' week_count|add:1 %}" title="Next">>></a>
@@ -74,7 +74,10 @@
                     Monday
                     <span class="card-date">{{ notes_week.day1.date|date:"M. d, Y" }}</span>
                 </p>
-                <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day1.date %}">View All</a>
+                <div class="container--flex gap-10">
+                    <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day1.date %}?next=main">View All</a>
+                    <a class="button button-dark plus-button" href="{% url 'note-create' %}?deadline={{ notes_week.day1.date|date:"Y-m-d" }}&next={{ request.path|urlencode }}">+</a>
+                </div>
             </div>
             <ul class="card-list">
                 {% for task in notes_week.day1.tasks %}
@@ -83,9 +86,9 @@
                     <p class="{{ task.weight }}" title="{{ task.weight }}" aria-haspopup="dialog">&#8226;</p>
                     <p class="item-title">{{task.title}}</p>
                     <div class="icon-set">
-                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128065;</a>
-                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
-                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                        <a class="icon card-icon" href="{% url 'note' task.id %}?next={{ request.path|urlencode }}" title="View">&#128065;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}?next={{ request.path|urlencode }}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}?next={{ request.path|urlencode }}" title="Delete">&#10008;</a>
                     </div>
                     </div>
                 </li>
@@ -98,7 +101,10 @@
                     Tuesday
                     <span class="card-date">{{ notes_week.day2.date|date:"M. d, Y" }}</span>
                 </p>
-                <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day2.date %}">View All</a>
+                <div class="container--flex gap-10">
+                    <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day2.date %}?next=main">View All</a>
+                    <a class="button button-dark plus-button" href="{% url 'note-create' %}?deadline={{ notes_week.day2.date|date:"Y-m-d" }}&next={{ request.path|urlencode }}">+</a>
+                </div>
             </div>
             <ul class="card-list">
                 {% for task in notes_week.day2.tasks %}
@@ -107,9 +113,9 @@
                     <p class="{{ task.weight }}">&#8226;</p>
                     <p class="item-title">{{task.title}}</p>
                     <div class="icon-set">
-                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128065;</a>
-                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
-                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                        <a class="icon card-icon" href="{% url 'note' task.id %}?next={{ request.path|urlencode }}" title="View">&#128065;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}?next={{ request.path|urlencode }}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}?next={{ request.path|urlencode }}" title="Delete">&#10008;</a>
                     </div>
                     </div>
                 </li>
@@ -121,7 +127,10 @@
                 <p class="card-title">Wednesday
                     <span class="card-date">{{ notes_week.day3.date|date:"M. d, Y" }}</span>
                 </p>
-                    <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day3.date %}">View All</a>
+                <div class="container--flex gap-10">
+                    <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day3.date %}?next=main">View All</a>
+                    <a class="button button-dark plus-button" href="{% url 'note-create' %}?deadline={{ notes_week.day3.date|date:"Y-m-d" }}&next={{ request.path|urlencode }}">+</a>
+                </div>
             </div>
             <ul class="card-list">
                 {% for task in notes_week.day3.tasks %}
@@ -130,9 +139,9 @@
                     <p class="{{ task.weight }}">&#8226;</p>
                     <p class="item-title">{{task.title}}</p>
                     <div class="icon-set">
-                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128065;</a>
-                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
-                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                        <a class="icon card-icon" href="{% url 'note' task.id %}?next={{ request.path|urlencode }}" title="View">&#128065;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}?next={{ request.path|urlencode }}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}?next={{ request.path|urlencode }}" title="Delete">&#10008;</a>
                     </div>
                     </div>
                 </li>
@@ -144,7 +153,10 @@
                 <p class="card-title">Thursday
                     <span class="card-date">{{ notes_week.day4.date|date:"M. d, Y" }}</span>
                 </p>
-                <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day4.date %}">View All</a>
+                <div class="container--flex gap-10">
+                    <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day4.date %}?next=main">View All</a>
+                    <a class="button button-dark plus-button" href="{% url 'note-create' %}?deadline={{ notes_week.day4.date|date:"Y-m-d" }}&next={{ request.path|urlencode }}">+</a>
+                </div>
             </div>
             <ul class="card-list">
                 {% for task in notes_week.day4.tasks %}
@@ -153,9 +165,9 @@
                     <p class="{{ task.weight }}">&#8226;</p>
                     <p class="item-title">{{task.title}}</p>
                     <div class="icon-set">
-                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128065;</a>
-                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
-                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                        <a class="icon card-icon" href="{% url 'note' task.id %}?next={{ request.path|urlencode }}" title="View">&#128065;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}?next={{ request.path|urlencode }}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}?next={{ request.path|urlencode }}" title="Delete">&#10008;</a>
                     </div>
                     </div>
                 </li>
@@ -167,7 +179,10 @@
                 <p class="card-title">Friday
                     <span class="card-date">{{ notes_week.day5.date|date:"M. d, Y" }}</span>
                 </p>
-                <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day5.date %}">View All</a>
+                <div class="container--flex gap-10">
+                    <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day5.date %}?next=main">View All</a>
+                    <a class="button button-dark plus-button" href="{% url 'note-create' %}?deadline={{ notes_week.day5.date|date:"Y-m-d" }}&next={{ request.path|urlencode }}">+</a>
+                </div>
             </div>
             <ul class="card-list">
                 {% for task in notes_week.day5.tasks %}
@@ -176,9 +191,9 @@
                     <p class="{{ task.weight }}">&#8226;</p>
                     <p class="item-title">{{task.title}}</p>
                     <div class="icon-set">
-                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128065;</a>
-                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
-                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                        <a class="icon card-icon" href="{% url 'note' task.id %}?next={{ request.path|urlencode }}" title="View">&#128065;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}?next={{ request.path|urlencode }}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}?next={{ request.path|urlencode }}" title="Delete">&#10008;</a>
                     </div>
                     </div>
                 </li>
@@ -190,7 +205,10 @@
                 <p class="card-title">Saturday
                     <span class="card-date">{{ notes_week.day6.date|date:"M. d, Y" }}</span>
                 </p>
-                <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day6.date %}">View All</a>
+                <div class="container--flex gap-10">
+                    <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day6.date %}?next=main">View All</a>
+                    <a class="button button-dark plus-button" href="{% url 'note-create' %}?deadline={{ notes_week.day6.date|date:"Y-m-d" }}&next={{ request.path|urlencode }}">+</a>
+                </div>
             </div>
             <ul class="card-list">
                 {% for task in notes_week.day6.tasks %}
@@ -199,9 +217,9 @@
                     <p class="{{ task.weight }}">&#8226;</p>
                     <p class="item-title">{{task.title}}</p>
                     <div class="icon-set">
-                        <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128065;</a>
-                        <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
-                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                        <a class="icon card-icon" href="{% url 'note' task.id %}?next={{ request.path|urlencode }}" title="View">&#128065;</a>
+                        <a class="icon card-icon" href="{% url 'note-update' task.id %}?next={{ request.path|urlencode }}" title="Edit">&#9998;</a>
+                        <a class="icon card-icon" href="{% url 'note-delete' task.id %}?next={{ request.path|urlencode }}" title="Delete">&#10008;</a>
                     </div>
                     </div>
                 </li>
@@ -214,8 +232,10 @@
             <p class="card-title">Sunday
                 <span class="card-date">{{ notes_week.day7.date|date:"M. d, Y" }}</span>
             </p>
-            <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day7.date %}">View All</a>
-        </div>
+            <div class="container--flex gap-10">
+                <a class="button button-light card-button" href="{% url 'tasks-day' notes_week.day7.date %}?next=main">View All</a>
+                <a class="button button-dark plus-button" href="{% url 'note-create' %}?deadline={{ notes_week.day7.date|date:"Y-m-d" }}&next={{ request.path|urlencode }}">+</a>
+            </div>        </div>
         <ul class="card-list">
             {% for task in notes_week.day7.tasks %}
             <li>
@@ -223,9 +243,9 @@
                 <p class="{{ task.weight }}">&#8226;</p>
                 <p class="item-title">{{task.title}}</p>
                 <div class="icon-set">
-                    <a class="icon card-icon" href="{% url 'note' task.id %}" title="View">&#128065;</a>
-                    <a class="icon card-icon" href="{% url 'note-update' task.id %}" title="Edit">&#9998;</a>
-                    <a class="icon card-icon" href="{% url 'note-delete' task.id %}" title="Delete">&#10008;</a>
+                    <a class="icon card-icon" href="{% url 'note' task.id %}?next={{ request.path|urlencode }}" title="View">&#128065;</a>
+                    <a class="icon card-icon" href="{% url 'note-update' task.id %}?next={{ request.path|urlencode }}" title="Edit">&#9998;</a>
+                    <a class="icon card-icon" href="{% url 'note-delete' task.id %}?next={{ request.path|urlencode }}" title="Delete">&#10008;</a>
                 </div>
                 </div>
             </li>

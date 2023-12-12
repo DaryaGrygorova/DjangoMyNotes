@@ -6,6 +6,7 @@
 
 {% block side-bar_block1 %}
 <div class="white-container mb-15">
+    <a class="button button-dark full-width mb-15" href="{{ back_to_url }}" ><< Go Back</a>
     <a class="button button-light full-width mb-15" href="{% url 'main' %}" ><< Go to Main</a>
     <a class="button button-light full-width" href="{% url 'notes' %}" ><< Go to Journal</a>
 </div>
@@ -19,8 +20,8 @@
 <div class="container--flex base-flex">
     <h2 class="text-left ">{{note.title}}</h2>
     <div class="icon-set">
-            <a class="icon" href="{% url 'note-update' note.id %}" title="Edit">&#9998;</a>
-            <a class="icon" href="{% url 'note-delete' note.id %}" title="Delete">&#10008;</a>
+            <a class="icon" href="{% url 'note-update' note.id %}?next={{ request.path|urlencode }}" title="Edit">&#9998;</a>
+            <a class="icon" href="{% url 'note-delete' note.id %}?next={{ request.path|urlencode }}" title="Delete">&#10008;</a>
         </div>
     </div>
     <div class="container--flex base-flex">
