@@ -1,6 +1,6 @@
 {% extends 'templates/home.html' %}
 
-{% block title %}My start Page{% endblock title %}
+{% block title %}My Notes{% endblock title %}
 {% block journal_page %} {% endblock journal_page %}
 {% block main_page %} current-page {% endblock main_page %}
 
@@ -41,6 +41,24 @@
     <a class="button button-dark full-width" href="{% url 'note-create' %}" >Add Note</a>
 </div>
 {% endblock side-bar_block2 %}
+
+{% block side-bar_block3 %}
+<div class="white-container">
+    <form method="POST" class="form" action="{% url 'day' %}" >
+    {% csrf_token %}
+        <label class="form-label" for="deadline">
+            <span class="mb-5">Search tasks by date</span>
+            <input
+                class="full-width mb-15"
+                type='date'
+                name="deadline"
+                value=""
+            />
+        </label>
+        <button class="button button-dark full-width" type='submit'>Search</button>
+    </form>
+</div>
+{% endblock side-bar_block3 %}
 
 {% block content %}
     <div class="page-title">

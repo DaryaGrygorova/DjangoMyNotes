@@ -35,7 +35,7 @@ def get_weather(city="Kyiv"):
         if data["cod"] in [404, "404"]:
             print(f'City with name "{city}" not found!')
             get_weather(city="Kyiv")
-            return
+            return None
 
         raise ConnectionError(
             f'Something went wrong! Response with code {data["cod"]}: {data.get("message", "")}'
@@ -44,7 +44,7 @@ def get_weather(city="Kyiv"):
     except ConnectionError as err:
         print(f"Something went wrong! {err}")
 
-    return
+    return None
 
 
 def get_last_monday(today_date=date.today()):
