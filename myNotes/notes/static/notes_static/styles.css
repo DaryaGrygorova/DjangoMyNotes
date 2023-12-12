@@ -164,6 +164,6 @@
 }
 
 .task-title {
-    line-height: 1.1;
-    max-width: calc(100% - 200px);
+    line-height: 1.27;
+    max-width: calc(100% - 215px);
 }

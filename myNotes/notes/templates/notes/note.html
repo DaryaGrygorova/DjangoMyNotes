@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="container--flex base-flex">
-        <p>Date: {{ note.deadline }}</p>
+        <p class="nowrap">Date: {{ note.deadline }}</p>
         <p class="{{ note.weight }}"><b>{{ note.weight }}</b></p>
         <p>Status:
             {% if not note.isComplete %}

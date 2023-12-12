@@ -9,6 +9,8 @@ from django.shortcuts import redirect, render
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
+
+from .forms import CreateNoteForm, UpdateNoteForm
 from .models import Note
 
 from utils.constants import WEEK_DAYS
@@ -140,7 +142,7 @@ class NoteCreate(LoginRequiredMixin, CreateView):
     """
 
     model = Note
-    fields = ["title", "desc", "deadline", "weight", "type"]
+    form_class = CreateNoteForm
     template_name = "notes/templates/notes/note_create_form.html"
     # success_url = reverse_lazy('main')
 
@@ -164,7 +166,7 @@ class NoteUpdate(LoginRequiredMixin, UpdateView):
     """
 
     model = Note
-    fields = ["title", "desc", "deadline", "weight", "type", "isComplete"]
+    form_class = UpdateNoteForm
     template_name = "notes/templates/notes/note_update_form.html"
     # success_url = reverse_lazy('main')
 

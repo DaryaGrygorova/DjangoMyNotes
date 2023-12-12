@@ -5,7 +5,7 @@
 {% block journal_page %} current-page {% endblock journal_page %}
 
 {% block side-bar_block1 %}
-<h2 class="title">My Journal</h2>
+<h2 class="title mb-15">My Journal</h2>
 {% endblock side-bar_block1 %}
 
 {% block side-bar_block2 %}
@@ -31,7 +31,7 @@
 {% for note in notes %}
 <div class="white-container mb-5">
     <div class="container--flex base-flex">
-        <p class="mb-5">Created at: <b>{{ note.create_at|date:"M. d, Y (D)" }}</b></p>
+        <p class="mb-5 nowrap">Created at: <b>{{ note.create_at|date:"M. d, Y (D)" }}</b></p>
         <div class="icon-set">
             <a class="icon" href="{% url 'note' note.id %}" title="View">&#128065;</a>
             <a class="icon" href="{% url 'note-update' note.id %}" title="Edit">&#9998;</a>
