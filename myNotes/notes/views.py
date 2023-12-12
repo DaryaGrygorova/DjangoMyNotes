@@ -9,7 +9,7 @@ from django.shortcuts import redirect, render
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
-from models import Note
+from .models import Note
 
 from utils.constants import WEEK_DAYS
 from utils.utils import get_last_monday, get_weather
