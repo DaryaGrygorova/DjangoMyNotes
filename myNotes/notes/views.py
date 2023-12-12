@@ -173,13 +173,16 @@ class NoteCreate(LoginRequiredMixin, CreateView):
     def get_initial(self):
         initial = super().get_initial()
 
-        target_date = self.request.GET.get(
-            "deadline", datetime.today().strftime("%Y-%m-%d")
-        )
-        entire_type = self.request.GET.get("type", "To do")
+        # check if the request set has a deadline attribute
+        target_date = self.request.GET.get("deadline", "")
+        if target_date:
+            initial["deadline"] = target_date
 
-        initial["deadline"] = target_date
-        initial["type"] = entire_type
+        # check if the request set has a type attribute
+        entire_type = self.request.GET.get("type", "")
+        if entire_type:
+            initial["type"] = entire_type
+
         return initial
 
     def get_success_url(self):
