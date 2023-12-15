@@ -1,7 +1,7 @@
 {% extends 'notes/templates/notes/main.html' %}
 
 {% block title %}Day Tasks{% endblock title %}
-{% block all_page %} {% if by_date is 'All times'%} current-page {% endif %}{% endblock all_page %}
+{% block all_page %} {% if 'All' in by_date %} current-page {% endif %}{% endblock all_page %}
 {% block main_page %} {% endblock main_page %}
 {% block journal_page %} {% endblock journal_page %}
 

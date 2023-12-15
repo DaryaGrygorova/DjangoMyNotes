@@ -16,9 +16,10 @@
              {% else %}
              <div class="container--flex gap-10 base-flex">
                   <span class="user-greeting ">
-                      You are not logged in
+
                   </span>
                  <a class="page-nav link" href="{% url 'login' %}">Login</a>
+                 <a class="page-nav link" href="{% url 'register' %}">Sign Up</a>
              </div>
             {% endif %}
         </p>
@@ -50,14 +51,6 @@
          <div class="container--flex relative">
              <aside class="side-bar">
              {% block side-bar_block1 %}
-             <div class="white-container">
-                 <div class="weather-info">
-                    <img class="weather-info-placeholder"
-                         alt="Weather Info Placeholder"
-                         src="{% static 'images/3221437.png' %}"
-                         height="100" width="100"/>
-                 </div>
-             </div>
              {% endblock side-bar_block1 %}
 
              {% block side-bar_block2 %}

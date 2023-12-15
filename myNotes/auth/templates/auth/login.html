@@ -12,12 +12,19 @@
                 <label class="form-label full-width-input mb-15" for="id_username">
                     <span>{{form.username.label}}</span>
                     {{form.username}}
+                    {% if form.errors.username %}
+                    <span class="form-error">{{ form.errors.username.as_text }}</span>
+                    {% endif %}
                 </label>
 
                 <label class="form-label full-width-input mb-15" for="id_password">
                     <span>{{form.password.label}}</span>
                     {{form.password}}
+                    {% if form.errors.password %}
+                    <span class="form-error">{{ form.errors.password.as_text }}</span>
+                    {% endif %}
                 </label>
+
 
                 <button type="submit" class="button button-dark full-width mb-15">Login</button>
             </form>
