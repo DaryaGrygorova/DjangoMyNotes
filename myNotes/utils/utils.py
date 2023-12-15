@@ -13,7 +13,7 @@ def get_weather(city="Kyiv"):
     """Gets and returns weather info"""
     url = f"{BASE_URL}?q={city}&units=metric&appid={API_KEY}"
     try:
-        response = requests.get(url, timeout=(15, 15))
+        response = requests.get(url, timeout=(10, 10))
 
         data = json.loads(response.text)
 

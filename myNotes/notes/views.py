@@ -75,7 +75,7 @@ class MainView(LoginRequiredMixin, ListView):
         return context
 
 
-class NoteList(LoginRequiredMixin, ListView):
+class NoteListView(LoginRequiredMixin, ListView):
     """
     Show the page with all entries with type 'note' ordered by creation date.
     """
@@ -102,10 +102,9 @@ class NoteList(LoginRequiredMixin, ListView):
         return context
 
 
-class TasksDayList(LoginRequiredMixin, ListView):
+class TasksDayListView(LoginRequiredMixin, ListView):
     """
-    Show the page with form for creating notes.
-    Redirect user to page with notes on deadline day
+    Show the page with all entries excluding notes by target day.
     """
 
     model = Note
@@ -137,7 +136,38 @@ class TasksDayList(LoginRequiredMixin, ListView):
         return context
 
 
-class NoteDetail(LoginRequiredMixin, DetailView):
+class TasksAllListView(LoginRequiredMixin, ListView):
+    """
+    Show the page with all entries excluding notes
+    """
+
+    model = Note
+    context_object_name = "tasks"
+    template_name = "notes/templates/notes/tasks_day_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tasks"] = context["tasks"].filter(user=self.request.user)
+
+        # returns entries excluding the type 'note'
+        context["tasks"] = context["tasks"].exclude(type="Note")
+
+        context["by_date"] = "All time"
+        # ordering data by status and weight
+        context["tasks"] = context["tasks"].order_by(
+            "isComplete", "weight", "create_at"
+        )
+
+        # filter data by search query
+        search_input = self.request.GET.get("search-area") or ""
+        if search_input != "":
+            context["tasks"] = context["tasks"].filter(title__icontains=search_input)
+        context["search_input"] = search_input
+
+        return context
+
+
+class NoteDetailView(LoginRequiredMixin, DetailView):
     """Show the page with notes details."""
 
     model = Note
@@ -160,7 +190,7 @@ class NoteDetail(LoginRequiredMixin, DetailView):
         return context
 
 
-class NoteCreate(LoginRequiredMixin, CreateView):
+class NoteCreateView(LoginRequiredMixin, CreateView):
     """
     Show the page with form for creating notes.
     Redirect user to page with notes on deadline day
@@ -204,7 +234,7 @@ class NoteCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class NoteUpdate(LoginRequiredMixin, UpdateView):
+class NoteUpdateView(LoginRequiredMixin, UpdateView):
     """
     Show the page with form for updating notes by id.
     Redirect user to page with notes on deadline day
