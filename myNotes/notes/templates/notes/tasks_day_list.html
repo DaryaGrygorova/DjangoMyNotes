@@ -15,7 +15,7 @@
 <div class="white-container mb-15">
     <a class="button button-light full-width mb-15" href="{% url 'main' %}" ><< Go to Main</a>
     <a class="button button-light full-width mb-15" href="{% url 'notes' %}" ><< Go to Journal</a>
-    <a class="button button-dark full-width" href="{% url 'note-create' %}?next={{ request.path|urlencode }}" >Add Note</a>
+    <a class="button button-dark full-width" href="{% url 'note-create' %}?next={{ request.path|urlencode }}{% if '20' in by_date %}&deadline={{ by_date }}{% endif %}" >Add Note</a>
 </div>
 {% endblock side-bar_block2 %}
 

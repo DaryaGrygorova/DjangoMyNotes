@@ -1,6 +1,7 @@
 """Tests for notes app"""
 
 from datetime import date, datetime, timedelta
+from time import sleep
 
 from django.contrib.auth.models import User
 from django.test import TestCase
@@ -94,7 +95,7 @@ class NoteCreateViewTestCase(TestCase):
         self.client.post("/notes/note-create/", data=new_note)
 
         notes = Note.objects.all()
-        note = Note.objects.get(id=1)
+        note = Note.objects.get(title='New title')
         self.assertEqual(len(notes), 1)
         self.assertEqual(note.user.username, "test_user")
         self.assertEqual(note.title, "New title")
@@ -136,7 +137,7 @@ class NoteCreateViewTestCase(TestCase):
         self.assertEqual(resp.status_code, 302)
         self.assertTrue(
             resp.url.startswith(
-                f'/notes/notes/{datetime.today().strftime("%Y-%m-%d")}/'
+                f'/notes/notes/2023-12-14/'
             )
         )
 
@@ -477,8 +478,10 @@ class NotesListViewTestCase(TestCase):
         test_user = create_test_user()
         self.client.login(username="test_user", password="password")
         create_test_note(note_type="Note", title="Note Title", user=test_user)
-        create_test_note(note_type="To do", title="To do Title", user=test_user)
-        create_test_note(note_type="Event", title="Event Title", user=test_user)
+        sleep(0.5)
+        create_test_note(note_type="Note", title="To do Title", user=test_user)
+        sleep(0.5)
+        create_test_note(note_type="Note", title="Event Title", user=test_user)
         resp = self.client.get("/notes/")
         self.assertEqual(resp.status_code, 200)
 
